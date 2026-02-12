@@ -8,7 +8,7 @@ app = Flask(__name__)
 def principal():
     conexao = mysql.connector.connect(
         host="localhost",
-        port=67,
+        port=3306,
         user="root",
         password="root",
         database="spotiduck"
@@ -19,15 +19,17 @@ def principal():
 
     # Comando
 
-    cursor.execute("""
-        
+    cursor.execute("SELECT codigo, img_capa, nome, cantor, duracao, nome_genero FROM musicas")
+    
+    # Guardando os dados em uma variavel
+    musicas = cursor.fetchall()
+    # Fechou a conexao
+    conexao.close()
 
-    """)
 
 
 
-
-    return render_template('principal.html')
+    return render_template('principal.html', musicas = musicas)
 
 @app.route('/admin')
 def admin():

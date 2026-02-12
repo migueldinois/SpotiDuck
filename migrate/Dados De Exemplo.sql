@@ -8,7 +8,7 @@ INSERT INTO `spotiduck`.`musicas`
 (`img_capa`, `nome`, `cantor`, `duracao`, `nome_genero`) 
 VALUES 
 ("https://akamai.sscdn.co/uploadfile/letras/fotos/5/4/1/6/5416d9ee2db3cf86b60997a55820c41a-tb7.jpg", 
-"Sweet Child O' Mine", 
+"Sweet Child O' Mine", generomusicas
 "Guns N' Roses", 
 "05:02",
 "Rock"),
