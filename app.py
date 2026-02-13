@@ -20,16 +20,19 @@ def principal():
     # Comando
 
     cursor.execute("SELECT codigo, img_capa, nome, cantor, duracao, nome_genero FROM musicas")
-    
     # Guardando os dados em uma variavel
     musicas = cursor.fetchall()
+
+    cursor.execute("SELECT nome, url_icone, cor FROM genero")
+    generos = cursor.fetchall()
+
     # Fechou a conexao
     conexao.close()
 
 
 
 
-    return render_template('principal.html', musicas = musicas)
+    return render_template('principal.html', musicas = musicas, generos = generos)
 
 @app.route('/admin')
 def admin():
