@@ -80,7 +80,7 @@
                     <p class="menu-label">Categorias</p>
                     <ul class="menu-list">
                         {% for genero in generos %}
-                        <li><a style="color: {{ genero.nome }};" href="#"><span class="icon"><i class="fa-solid fa-compact-disc"></i></span>{{ genero.nome }}</a></li>
+                        <li><a style="color: {{ genero.cor }};" href="#"><span class="icon"><i class="fa-solid fa-compact-disc"></i></span>{{ genero.nome }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -110,9 +110,9 @@
                             </div>
                         </div>
                     </div>
-
-                    </div>
                     {% endfor %}
+                    </div>
+                    
             </main>
         </div>
     </div>

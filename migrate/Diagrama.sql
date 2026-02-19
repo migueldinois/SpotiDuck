@@ -13,11 +13,4 @@ CREATE TABLE IF NOT EXISTS musicas (
  duracao TIME(6),
  nome_genero VARCHAR(30),
  CONSTRAINT fk_musica_genero FOREIGN KEY (nome_genero) REFERENCES genero(nome)
-);
-
-
-
-
-
-
-
+)
