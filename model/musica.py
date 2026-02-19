@@ -13,7 +13,7 @@ class Musica():
 
         input_titulo = request.form.get("titulo-musica")
         input_cantor = request.form.get("cantor-musica")
-        input_duracao = '00:05:00'
+        input_duracao = request.form.get("duracao-musica")
         input_imagem = request.form.get("imagem_musica")
         input_genero = request.form.get("categoria-musica")
 
