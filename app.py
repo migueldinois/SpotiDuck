@@ -6,6 +6,9 @@ from model.musica import Musica
 
 app = Flask(__name__)
 
+
+lista_de_musicas = []
+
 @app.route('/')
 @app.route('/home')
 def principal():
@@ -34,7 +37,7 @@ def admin():
 
 @app.route('/salvar_musica', methods=['POST'])
 def salvar_musica():
-    
+
     Musica.adicionar_musica()
     return render_template('administracao.html')
 
