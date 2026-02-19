@@ -1,43 +1,42 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import mysql.connector
+from model.genero import Genero
+from database.conexao import Conexao
+from model.musica import Musica
 
 app = Flask(__name__)
 
 @app.route('/')
 @app.route('/home')
 def principal():
-    conexao = mysql.connector.connect(
-        host="localhost",
-        port=3306,
-        user="root",
-        password="root",
-        database="spotiduck"
-    )
 
-    # Vai entregar coluna nome é esse valor, ao inves de dar tudo separado em ma lista sem direcionamento 
-    cursor = conexao.cursor(dictionary=True)
+    # Pegando conexao e cursor da classe
+    conexao, cursor = Conexao.conectar()
 
-    # Comando
+    # Recuperando Musicas
+    musicas = musicas = Musica.recuperar_musicas()
 
-    cursor.execute("SELECT codigo, img_capa, nome, cantor, duracao, nome_genero FROM musicas")
-    # Guardando os dados em uma variavel
-    musicas = cursor.fetchall()
-
-    cursor.execute("SELECT nome, url_icone, cor FROM genero")
-    generos = cursor.fetchall()
+    # Recuperando Generos
+    generos = Genero.recuperar_generos()
 
     # Fechou a conexao
     conexao.close()
-
-
-
 
     return render_template('principal.html', musicas = musicas, generos = generos)
 
 @app.route('/admin')
 def admin():
-    return render_template('administracao.html')
 
+    musicas = Musica.recuperar_musicas()
+    generos = Genero.recuperar_generos()
+
+    return render_template('administracao.html',  musicas = musicas, generos = generos)
+
+@app.route('/salvar_musica', methods=['POST'])
+def salvar_musica():
+    
+    Musica.adicionar_musica()
+    return render_template('administracao.html')
 
 
 if __name__ == "__main__":
