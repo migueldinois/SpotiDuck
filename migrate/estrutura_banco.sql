@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS musicas (
  cantor VARCHAR(50),
  duracao TIME(6),
  nome_genero VARCHAR(30),
+ ativo bool default 0,
  CONSTRAINT fk_musica_genero FOREIGN KEY (nome_genero) REFERENCES genero(nome)
 )

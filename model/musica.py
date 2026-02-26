@@ -4,34 +4,91 @@ from database.conexao import Conexao
 class Musica():
     def recuperar_musicas():
         conexao, cursor = Conexao.conectar()
-        cursor.execute("SELECT codigo, img_capa, nome, cantor, duracao, nome_genero FROM musicas")
+        cursor.execute("SELECT codigo, img_capa, nome, cantor, duracao, nome_genero, ativo FROM musicas")
         musicas = cursor.fetchall()
 
         return musicas
     
-    def adicionar_musica():
+    def salvar_musica(nome_musica:str, cantor:str, duracao:str, url_imagem:str, genero:str) -> bool:
+        """
+        Esta função ira servir para adicionar as músicas e conferir com o bool se realmente foi adicionada.
 
-        input_titulo = request.form.get("titulo-musica")
-        input_cantor = request.form.get("cantor-musica")
-        input_duracao = request.form.get("duracao-musica")
-        input_imagem = request.form.get("imagem_musica")
-        input_genero = request.form.get("categoria-musica")
+        """
+        try:
 
-        conexao, cursor = Conexao.conectar()
+            conexao, cursor = Conexao.conectar()
+
+            cursor.execute("""
+                        
+                        INSERT INTO `spotiduck`.`musicas` 
+
+                        (cantor, duracao, nome, img_capa, nome_genero)
+                        values (%s, %s, %s, %s,%s);
+
+                        """,
+
+                        [ cantor, duracao, nome_musica, url_imagem, genero ]
+                    
+                        )
+            
+            conexao.commit()
+            conexao.close()
+
+            return True
+        except:
+            return False
+
+    def excluir_musica(codigo:int) -> bool:
+        """
+        Funcao pare excluir as musicas
+        """
+        try:
+            conexao, cursor = Conexao.conectar()
+            
+            cursor.execute("""
+                DELETE FROM musicas 
+                WHERE codigo = %s
+            """, 
+            [codigo])   
+            conexao.commit()   
+            
+            conexao.close() 
+
+            return True
+            
+        except Exception as erro:
+            print(erro)
+            return False
         
-        #  no mysql utilizamos %s para variaveis assim, e no sqlite utilizamos "?"
-        cursor.execute("""
+    def alterar_status(status:int, codigo:int) -> bool:
+        """Serve para alterar o status da musica"""
+        status = int(status)
+        try:
+            if status:
+                conexao, cursor = Conexao.conectar()
+                cursor.execute("""
+                    UPDATE musicas
+                    SET ativo = 0
+                    WHERE codigo = %s
+                """, [codigo])
+                
+                conexao.commit()
+                conexao.close()
+                return True
+            elif status == False: 
+                conexao, cursor = Conexao.conectar()
+                cursor.execute("""
+                    UPDATE musicas
+                    SET ativo = 1
+                    WHERE codigo = %s
+                """, [codigo])
+                
+                conexao.commit()
+                conexao.close()
+                return True
 
-            INSERT INTO `spotiduck`.`musicas` 
-            (`img_capa`, `nome`, `cantor`, `duracao`, `nome_genero`) 
-            VALUES 
-            ("%s", 
-            "%s", 
-            "%s", 
-            "%s",
-            "%s")
-
-            """, (input_titulo, input_cantor, input_duracao, input_imagem, input_genero))
-        
-        conexao.commit()
+            
+        except Exception as erro:
+            print(erro)
+            return False
 

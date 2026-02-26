@@ -11,16 +11,20 @@ VALUES
 "Sweet Child O' Mine", 
 "Guns N' Roses", 
 "00:05:02",
-"Rock"),
+"Rock",
+1),
 
 ("https://akamai.sscdn.co/uploadfile/letras/fotos/d/3/b/b/d3bb3024303d4a7e09d3cafef095de0c-tb7.jpg",
 "Ordinary",
 "Alex Warren",
 "00:03:06",
-"Pop"),
+"Pop",
+1),
 
 ("https://upload.wikimedia.org/wikipedia/pt/8/84/Lu%C3%ADsa_Sonza_-_Devagarinho.png", 
 "Devagarinho", 
 "Luisa Sonza", 
 "00:03:12",
-"MPB");
+"MPB",
+1);
+
