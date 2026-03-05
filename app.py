@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import mysql.connector
 from model.genero import Genero
 from database.conexao import Conexao
 from model.musica import Musica
+from model.usuario import Usuario
 
 app = Flask(__name__)
 
@@ -70,6 +71,42 @@ def alterar_status_musica(status, codigo):
         return redirect("/admin")
     else:
         return "Erro ao alterar  música"
+    
+
+@app.route("/cadastro")
+def pagina_cadastro():
+    return render_template("cadastro.html")
+
+@app.route("/usuario/cadastro", methods=["POST"])
+def criar_cadastro():
+    input_usuario = request.form.get("usuario")
+    input_senha = request.form.get("senha")
+    
+    if Usuario.cadastrar_usuario(input_usuario, input_senha):
+        return redirect("/home")
+    else:
+        return "Erro ao cadastrar"
+
+@app.route("/login")
+def pagina_login():
+    return render_template("login.html")
+
+@app.route("/usuario/login", methods=["POST"])
+def validar_login():
+    input_usuario = request.form.get("usuario")
+    input_senha = request.form.get("senha")
+
+    if Usuario.autenticar_usuario(input_usuario, input_senha):
+        return redirect("/admin")
+    else:
+        return render_template('login.html', erro="Usuário ou senha incorretos.")
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=8080, debug=True)
