@@ -8,7 +8,8 @@ from model.usuario import Usuario
 app = Flask(__name__)
 
 
-lista_de_musicas = []
+
+app.secret_key = "pato"
 
 @app.route('/')
 @app.route('/home')
@@ -32,11 +33,13 @@ def principal():
 
 @app.route('/admin')
 def admin():
+    if "usuario" in session:
+        musicas = Musica.recuperar_musicas()
+        generos = Genero.recuperar_generos()
 
-    musicas = Musica.recuperar_musicas()
-    generos = Genero.recuperar_generos()
-
-    return render_template('administracao.html',  musicas = musicas, generos = generos)
+        return render_template('administracao.html',  musicas = musicas, generos = generos)
+    else:
+        return redirect("/login")
 
 @app.route("/musica/post", methods=["POST"])
 def api_inserir_musica():
@@ -97,14 +100,16 @@ def validar_login():
     input_senha = request.form.get("senha")
 
     if Usuario.autenticar_usuario(input_usuario, input_senha):
+        session["usuario"] = input_usuario
         return redirect("/admin")
     else:
         return render_template('login.html', erro="Usuário ou senha incorretos.")
 
-
-
-
-
+# Funcao para deslogar
+@app.route("/logout", methods=["GET"])
+def logout():
+    session.pop("usuario", None)
+    return redirect("/home")
 
 
 

@@ -7,6 +7,26 @@
     <title>Login - SpotiDuck</title>
 </head>
 <style>
+    .icone-x{
+        display: block;
+        margin: 10 auto;
+        width: 15px;
+
+    }
+
+    .text-error {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: red;
+        text-align: center;
+    }
+
+    .container__error {
+        margin: 0 auto;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     * {
         margin: 0;
         padding: 0;
@@ -93,7 +113,11 @@
                 </div>
 
                 <button type="submit">Logar</button>
-                <p class="text-error">{{erro}}</p>
+                <div class="container__error">
+                    <img class="icone-x" src="https://cdn-icons-png.flaticon.com/512/458/458594.png" alt="">]
+                    <p class="text-error">{{erro}}</p>
+                </div>
+                
             </form>
         </div>
         <div class="footer__form">
