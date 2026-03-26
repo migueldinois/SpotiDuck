@@ -113,8 +113,11 @@
                 </div>
 
                 <button type="submit">Logar</button>
+
                 <div class="container__error">
-                    <img class="icone-x" src="https://cdn-icons-png.flaticon.com/512/458/458594.png" alt="">]
+                    {% if erro == "Usuário ou senha incorretos." %}
+                    <img class="icone-x" src="https://cdn-icons-png.flaticon.com/512/458/458594.png" alt="">
+                    {% endif %}
                     <p class="text-error">{{erro}}</p>
                 </div>
                 

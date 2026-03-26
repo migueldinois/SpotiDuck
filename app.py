@@ -7,8 +7,6 @@ from model.usuario import Usuario
 
 app = Flask(__name__)
 
-
-
 app.secret_key = "pato"
 
 @app.route('/')
@@ -78,6 +76,8 @@ def alterar_status_musica(status, codigo):
 
 @app.route("/cadastro")
 def pagina_cadastro():
+    if "usuario" in session:
+        return redirect("/admin")
     return render_template("cadastro.html")
 
 @app.route("/usuario/cadastro", methods=["POST"])
@@ -92,15 +92,17 @@ def criar_cadastro():
 
 @app.route("/login")
 def pagina_login():
+    if "usuario" in session:
+        return redirect("/admin")
     return render_template("login.html")
-
 @app.route("/usuario/login", methods=["POST"])
 def validar_login():
     input_usuario = request.form.get("usuario")
     input_senha = request.form.get("senha")
+    usuario_logado = Usuario.autenticar_usuario(input_usuario, input_senha)
 
     if Usuario.autenticar_usuario(input_usuario, input_senha):
-        session["usuario"] = input_usuario
+        session["usuario"] = usuario_logado
         return redirect("/admin")
     else:
         return render_template('login.html', erro="Usuário ou senha incorretos.")
