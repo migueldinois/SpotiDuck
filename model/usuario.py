@@ -32,8 +32,11 @@ class Usuario():
         """Função que verifica se o usuario existe e se estiver cadastrado retorna true, caso contrrio retorna false"""
         conexao, cursor = Conexao.conectar()
         cursor.execute("SELECT usuario FROM usuarios WHERE usuario = %s AND senha = %s", [usuario_input, senha_input])
-        conexao.close()
         usuario = cursor.fetchone() 
+        
+        conexao.close()
+        cursor.close()
+        
         # Se o usuario não for nulo, vai entrar com essa session
         if usuario is not None:
             try:
