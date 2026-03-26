@@ -7,7 +7,7 @@
     <title>Login - SpotiDuck</title>
 </head>
 <style>
-    .icone-x{
+    .icone-x {
         display: block;
         margin: 10 auto;
         width: 15px;
@@ -27,6 +27,7 @@
         align-items: center;
         justify-content: center;
     }
+
     * {
         margin: 0;
         padding: 0;
@@ -51,7 +52,7 @@
 
     }
 
-    .form-group{
+    .form-group {
         margin-bottom: 20px;
     }
 
@@ -115,12 +116,13 @@
                 <button type="submit">Logar</button>
 
                 <div class="container__error">
-                    {% if erro == "Usuário ou senha incorretos." %}
-                    <img class="icone-x" src="https://cdn-icons-png.flaticon.com/512/458/458594.png" alt="">
-                    {% endif %}
-                    <p class="text-error">{{erro}}</p>
+                    {% with mensagens = get_flashed_messages()%}
+                    {% for mensagem  in mensagens %}
+                    <p class="text-error">{{mensagem}}</p>
+                    {%endfor%}
+                    {%endwith%}
                 </div>
-                
+
             </form>
         </div>
         <div class="footer__form">

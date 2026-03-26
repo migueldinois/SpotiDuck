@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 import mysql.connector
 from model.genero import Genero
 from database.conexao import Conexao
@@ -103,9 +103,11 @@ def validar_login():
 
     if Usuario.autenticar_usuario(input_usuario, input_senha):
         session["usuario"] = usuario_logado
-        return redirect("/admin")
+        flash(f"Bem vindo de volta {usuario_logado}!", "success")
+        return redirect(url_for("admin"))
     else:
-        return render_template('login.html', erro="Usuário ou senha incorretos.")
+        flash("Usuario ou senha invalidos!", "error")
+        return redirect('/login')
 
 # Funcao para deslogar
 @app.route("/logout", methods=["GET"])
