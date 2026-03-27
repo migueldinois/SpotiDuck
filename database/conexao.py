@@ -3,7 +3,7 @@ tipo_conexao = "NUVEM"
 class Conexao():
     @staticmethod
     def conectar():
-        if tipo_conexao == "NUVEM":
+        if tipo_conexao == "LOCAL":
             conexao = mysql.connector.connect(
             host="localhost",
             port=3306,
